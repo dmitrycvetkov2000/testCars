@@ -8,6 +8,7 @@
 import UIKit
 
 class MainVC: UIViewController {
+    var viewModel: MainViewModelProtocol?
     var fetchingMore = false
     private lazy var spinner: CustomSpinnerSimple = {
         let squareLength: CGFloat = 50
@@ -20,8 +21,6 @@ class MainVC: UIViewController {
     private var imageCollection: [UIImage] = [UIImage(named: "ИМТ")!, UIImage(named: "Рулетка")!, UIImage(named: "Рецепты")!, UIImage(named: "Финиш")!,
                                               UIImage(named: "Ккал")!, UIImage(named: "Карта")!, UIImage(named: "Калории")!, UIImage(named: "Часы")!,
                                               UIImage(named: "Пальцы")!, UIImage(named: "Руки")!]
-    
-    private var imageCollection2: [UIImage] = []
     
     private lazy var flowLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()

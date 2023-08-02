@@ -6,3 +6,15 @@
 //
 
 import Foundation
+
+protocol MainViewModelProtocol {
+    init(model: MainModel)
+}
+
+class MainViewModel: MainViewModelProtocol {
+    var model: MainModel
+    
+    required init(model: MainModel) {
+        self.model = model
+    }
+}
