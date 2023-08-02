@@ -9,10 +9,17 @@ import UIKit
 
 class MainVC: UIViewController {
     var fetchingMore = false
+    private lazy var spinner: CustomSpinnerSimple = {
+        let squareLength: CGFloat = 50
+        let spinner = CustomSpinnerSimple(squareLength: squareLength)
+        spinner.frame.origin = CGPoint(x: Int(view.bounds.size.width - squareLength) / 2, y: Int(view.bounds.size.height - squareLength / 2 * 2))
+
+        return spinner
+    }()
     
     private var imageCollection: [UIImage] = [UIImage(named: "ИМТ")!, UIImage(named: "Рулетка")!, UIImage(named: "Рецепты")!, UIImage(named: "Финиш")!,
                                               UIImage(named: "Ккал")!, UIImage(named: "Карта")!, UIImage(named: "Калории")!, UIImage(named: "Часы")!,
-                                              UIImage(named: "Пальцы")!, UIImage(named: "Руки")!, UIImage(named: "Дом")!, UIImage(named: "Пепси")!]
+                                              UIImage(named: "Пальцы")!, UIImage(named: "Руки")!]
     
     private var imageCollection2: [UIImage] = []
     
@@ -22,7 +29,7 @@ class MainVC: UIViewController {
         layout.minimumLineSpacing = 10
         layout.scrollDirection = .vertical
         layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        layout.sectionInset = .init(top: 30, left: 30, bottom: 30, right: 30)
+        layout.sectionInset = .init(top: 10, left: 30, bottom: 30, right: 30)
         return layout
     }()
     
@@ -37,6 +44,7 @@ class MainVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(collectionView)
+        
         collectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: CustomCollectionViewCell.identifier)
         setupConstraints()
     }
@@ -81,16 +89,27 @@ extension MainVC {
     }
     
     func beginBathFetch() {
+        showSpinner()
         fetchingMore = true
         print("Begin!")
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            let newImages: [UIImage] = [UIImage(named: "Лейбл")!, UIImage(named: "ВК")!, UIImage(named: "Бомба")!, UIImage(named: "Огонь")!]
+            let newImages: [UIImage] = [UIImage(named: "Дом")!, UIImage(named: "Пепси")!, UIImage(named: "Лейбл")!, UIImage(named: "ВК")!, UIImage(named: "Бомба")!, UIImage(named: "Огонь")!]
             newImages.forEach {
                 self.imageCollection.append($0)
             }
             self.fetchingMore = false
             self.collectionView.reloadData()
+            self.stopSpinner()
         }
+    }
+    
+    func showSpinner() {
+        view.addSubview(spinner)
+        spinner.startAnimation(delay: 0.04, replicates: 20)
+    }
+    func stopSpinner() {
+        spinner.stopAnimation()
+        spinner.removeFromSuperview()
     }
 }
