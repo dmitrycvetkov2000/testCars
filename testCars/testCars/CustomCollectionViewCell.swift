@@ -10,7 +10,7 @@ import UIKit
 class CustomCollectionViewCell: UICollectionViewCell {
     
     static var identifier: String {
-            return String(describing: self)
+        return String(describing: self)
     }
     
     lazy var imageView: UIImageView = {
@@ -33,7 +33,6 @@ class CustomCollectionViewCell: UICollectionViewCell {
         
         contentView.addSubview(imageView)
         contentView.addSubview(label)
-        contentView.layer.cornerRadius = 6
         setupConstraintsForImage()
         setupConstraintsForLabel()
     }
@@ -43,20 +42,22 @@ class CustomCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupConstraintsForImage() {
-        
         NSLayoutConstraint.activate([
+            imageView.heightAnchor.constraint(equalToConstant: 120),
+            imageView.widthAnchor.constraint(equalToConstant: 150),
+            
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
             imageView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 0),
             imageView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 0),
-            imageView.heightAnchor.constraint(equalToConstant: 200)
         ])
-    
     }
     
     private func setupConstraintsForLabel() {
         NSLayoutConstraint.activate([
             label.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 0),
-            label.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 0)
+            label.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 0),
+            label.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 0),
+            label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0)
         ])
     }
 }

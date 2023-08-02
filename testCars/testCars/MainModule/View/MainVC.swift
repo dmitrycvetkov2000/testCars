@@ -8,14 +8,21 @@
 import UIKit
 
 class MainVC: UIViewController {
-
-    private var imageCollection: [UIImage] = [UIImage(named: "ИМТ")!, UIImage(named: "Рулетка")!, UIImage(named: "Рецепты")!, UIImage(named: "Финиш")!]
+    var fetchingMore = false
     
-    private var flowLayout: UICollectionViewFlowLayout = {
+    private var imageCollection: [UIImage] = [UIImage(named: "ИМТ")!, UIImage(named: "Рулетка")!, UIImage(named: "Рецепты")!, UIImage(named: "Финиш")!,
+                                              UIImage(named: "Ккал")!, UIImage(named: "Карта")!, UIImage(named: "Калории")!, UIImage(named: "Часы")!,
+                                              UIImage(named: "Пальцы")!, UIImage(named: "Руки")!, UIImage(named: "Дом")!, UIImage(named: "Пепси")!]
+    
+    private var imageCollection2: [UIImage] = []
+    
+    private lazy var flowLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 10
+        layout.minimumLineSpacing = 10
         layout.scrollDirection = .vertical
-        layout.itemSize = CGSize(width: 200, height: 100)
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        layout.sectionInset = .init(top: 30, left: 30, bottom: 30, right: 30)
         return layout
     }()
     
@@ -30,21 +37,9 @@ class MainVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(collectionView)
-        view.backgroundColor = .white
-        collectionView.backgroundColor = .clear
         collectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: CustomCollectionViewCell.identifier)
         setupConstraints()
     }
-    
-    private func setupConstraints() {
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-            collectionView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0),
-            collectionView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0)
-        ])
-    }
-
 }
 
 extension MainVC: UICollectionViewDataSource, UICollectionViewDelegate {
@@ -55,17 +50,47 @@ extension MainVC: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCollectionViewCell.identifier, for: indexPath) as? CustomCollectionViewCell else { return UICollectionViewCell() }
         cell.imageView.image = imageCollection[indexPath.row]
-        cell.backgroundColor = .red
+        cell.backgroundColor = .lightGray
         return cell
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        
+        if offsetY > contentHeight - scrollView.frame.height {
+            if !fetchingMore {
+                beginBathFetch()
+            }
+        }
+    }
 }
 
-extension MainVC: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 40
+extension MainVC {
+    private func setupConstraints() {
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            collectionView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 0),
+            collectionView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: 0),
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0)
+        ])
+    }
+    
+    func beginBathFetch() {
+        fetchingMore = true
+        print("Begin!")
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            let newImages: [UIImage] = [UIImage(named: "Лейбл")!, UIImage(named: "ВК")!, UIImage(named: "Бомба")!, UIImage(named: "Огонь")!]
+            newImages.forEach {
+                self.imageCollection.append($0)
+            }
+            self.fetchingMore = false
+            self.collectionView.reloadData()
+        }
     }
 }
