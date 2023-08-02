@@ -16,6 +16,7 @@
 		0AA037142A7A702D008FB4BB /* CustomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA037132A7A702D008FB4BB /* CustomCollectionViewCell.swift */; };
 		0AA037162A7AB9A1008FB4BB /* CustomSpinnerSimple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA037152A7AB9A1008FB4BB /* CustomSpinnerSimple.swift */; };
 		0AA037182A7AC954008FB4BB /* ModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA037172A7AC954008FB4BB /* ModuleBuilder.swift */; };
+		0AA0371B2A7ACAD1008FB4BB /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA0371A2A7ACAD1008FB4BB /* Router.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		0AA037132A7A702D008FB4BB /* CustomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewCell.swift; sourceTree = "<group>"; };
 		0AA037152A7AB9A1008FB4BB /* CustomSpinnerSimple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSpinnerSimple.swift; sourceTree = "<group>"; };
 		0AA037172A7AC954008FB4BB /* ModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleBuilder.swift; sourceTree = "<group>"; };
+		0AA0371A2A7ACAD1008FB4BB /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 		0AA036F42A7A5D6F008FB4BB /* testCars */ = {
 			isa = PBXGroup;
 			children = (
+				0AA0371C2A7ACB9B008FB4BB /* Routing */,
 				0AA037192A7AC960008FB4BB /* Builder */,
 				0AA037152A7AB9A1008FB4BB /* CustomSpinnerSimple.swift */,
 				0AA037132A7A702D008FB4BB /* CustomCollectionViewCell.swift */,
@@ -130,6 +133,14 @@
 				0AA037172A7AC954008FB4BB /* ModuleBuilder.swift */,
 			);
 			path = Builder;
+			sourceTree = "<group>";
+		};
+		0AA0371C2A7ACB9B008FB4BB /* Routing */ = {
+			isa = PBXGroup;
+			children = (
+				0AA0371A2A7ACAD1008FB4BB /* Router.swift */,
+			);
+			path = Routing;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -202,6 +213,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0AA0371B2A7ACAD1008FB4BB /* Router.swift in Sources */,
 				0AA0370F2A7A6133008FB4BB /* MainModel.swift in Sources */,
 				0AA037142A7A702D008FB4BB /* CustomCollectionViewCell.swift in Sources */,
 				0AA037162A7AB9A1008FB4BB /* CustomSpinnerSimple.swift in Sources */,
