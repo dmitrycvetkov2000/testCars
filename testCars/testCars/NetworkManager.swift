@@ -11,6 +11,7 @@ import Foundation
 
 protocol NetworkManagerProtocol {
     func getCars(page: Int, completion: @escaping (Result<MainCars?, Error>) -> Void)
+    func getMainInfoAboutCarAndOwner(carId: Int, completion: @escaping (Result<MainCars?, Error>) -> Void)
 }
 
 class NetworkManager: NetworkManagerProtocol {
@@ -28,6 +29,27 @@ class NetworkManager: NetworkManagerProtocol {
             if let data = data {
                 do {
                     let obj = try JSONDecoder().decode(MainCars.self, from: data)
+                    completion(.success(obj))
+                } catch {
+                    completion(.failure(error))
+                }
+            }
+        }.resume()
+    }
+    
+    func getMainInfoAboutCarAndOwner(carId: Int, completion: @escaping (Result<MainInfoAboutCar?, Error>) -> Void) {
+        let urlString = "http://am111.05.testing.place/api/v1/car/\(carId)"
+        guard let url = URL(string: urlString) else { return }
+        
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            if let data = data {
+                do {
+                    let obj = try JSONDecoder().decode(MainInfoAboutCar.self, from: data)
                     completion(.success(obj))
                 } catch {
                     completion(.failure(error))
