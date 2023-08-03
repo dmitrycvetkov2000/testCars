@@ -26,6 +26,7 @@
 		0AA0372F2A7BF9DB008FB4BB /* CellForUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA0372E2A7BF9DB008FB4BB /* CellForUserInfo.swift */; };
 		0AA037312A7BFA48008FB4BB /* CellForComments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA037302A7BFA48008FB4BB /* CellForComments.swift */; };
 		0AA037372A7C32DB008FB4BB /* HelperForCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA037362A7C32DB008FB4BB /* HelperForCollectionView.swift */; };
+		0AA0373A2A7C369E008FB4BB /* MainInfoAboutCar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA037392A7C369E008FB4BB /* MainInfoAboutCar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		0AA0372E2A7BF9DB008FB4BB /* CellForUserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellForUserInfo.swift; sourceTree = "<group>"; };
 		0AA037302A7BFA48008FB4BB /* CellForComments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellForComments.swift; sourceTree = "<group>"; };
 		0AA037362A7C32DB008FB4BB /* HelperForCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperForCollectionView.swift; sourceTree = "<group>"; };
+		0AA037392A7C369E008FB4BB /* MainInfoAboutCar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainInfoAboutCar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +177,7 @@
 		0AA037222A7B626F008FB4BB /* DetailModule */ = {
 			isa = PBXGroup;
 			children = (
+				0AA037382A7C3660008FB4BB /* Model */,
 				0AA0372D2A7BF9AD008FB4BB /* Cells */,
 				0AA037282A7B62AD008FB4BB /* View */,
 				0AA037272A7B62A6008FB4BB /* ViewModel */,
@@ -208,6 +211,14 @@
 				0AA037302A7BFA48008FB4BB /* CellForComments.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		0AA037382A7C3660008FB4BB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0AA037392A7C369E008FB4BB /* MainInfoAboutCar.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -283,6 +294,7 @@
 				0AA0371E2A7ACE11008FB4BB /* NetworkManager.swift in Sources */,
 				0AA0371B2A7ACAD1008FB4BB /* Router.swift in Sources */,
 				0AA037242A7B6284008FB4BB /* DetailVC.swift in Sources */,
+				0AA0373A2A7C369E008FB4BB /* MainInfoAboutCar.swift in Sources */,
 				0AA0370F2A7A6133008FB4BB /* MainCar.swift in Sources */,
 				0AA037142A7A702D008FB4BB /* CustomCollectionViewCell.swift in Sources */,
 				0AA0372C2A7BF96F008FB4BB /* ListSection.swift in Sources */,
