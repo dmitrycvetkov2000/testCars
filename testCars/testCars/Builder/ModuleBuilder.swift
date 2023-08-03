@@ -14,8 +14,8 @@ protocol BuilderProtocol: AnyObject {
 class ModuleBuilder: BuilderProtocol {
     func createMain(router: RouterProtocol) -> UIViewController {
         let view = MainVC()
-        let model = MainModel()
-        let viewModel = MainViewModel(model: model)
+        let networkManager = NetworkManager()
+        let viewModel = MainViewModel(networkManager: networkManager, router: router)
         view.viewModel = viewModel
         
         return view

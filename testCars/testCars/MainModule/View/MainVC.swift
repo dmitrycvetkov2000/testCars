@@ -8,6 +8,7 @@
 import UIKit
 
 class MainVC: UIViewController {
+    
     var viewModel: MainViewModelProtocol?
     var fetchingMore = false
     private lazy var spinner: CustomSpinnerSimple = {
@@ -18,17 +19,13 @@ class MainVC: UIViewController {
         return spinner
     }()
     
-    private var imageCollection: [UIImage] = [UIImage(named: "ИМТ")!, UIImage(named: "Рулетка")!, UIImage(named: "Рецепты")!, UIImage(named: "Финиш")!,
-                                              UIImage(named: "Ккал")!, UIImage(named: "Карта")!, UIImage(named: "Калории")!, UIImage(named: "Часы")!,
-                                              UIImage(named: "Пальцы")!, UIImage(named: "Руки")!]
-    
     private lazy var flowLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = 10
-        layout.minimumLineSpacing = 10
+        layout.minimumInteritemSpacing = 15
+        layout.minimumLineSpacing = 15
         layout.scrollDirection = .vertical
-        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        layout.sectionInset = .init(top: 10, left: 30, bottom: 30, right: 30)
+        layout.itemSize = CGSize(width: CGFloat(view.bounds.size.width / 2 - 10 - 15), height: CGFloat(view.bounds.size.height / 3 - 15 - 15))
+        layout.sectionInset = .init(top: 15, left: 15, bottom: 15, right: 15)
         return layout
     }()
     
@@ -42,21 +39,42 @@ class MainVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         view.addSubview(collectionView)
         view.backgroundColor = .white
         collectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: CustomCollectionViewCell.identifier)
         setupConstraints()
+
+        viewModel?.getAutomobils(completion: { [weak self] in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        })
     }
 }
 
 extension MainVC: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imageCollection.count
+        if let viewModel = self.viewModel as? MainViewModel {
+            return viewModel.paginationAuto.count
+        } else {
+            return 0
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCollectionViewCell.identifier, for: indexPath) as? CustomCollectionViewCell else { return UICollectionViewCell() }
-        cell.imageView.image = imageCollection[indexPath.row]
+        
+        if let viewModel = self.viewModel as? MainViewModel {
+            cell.createImage(imageString: viewModel.paginationAuto[indexPath.row].image ?? "")
+            let text = "\((viewModel.paginationAuto[indexPath.row].brandName ?? "") ) \((viewModel.paginationAuto[indexPath.row].modelName ?? "") )  \(viewModel.paginationAuto[indexPath.row].transmissionName?.rawValue ?? "") \(viewModel.paginationAuto[indexPath.row].year ?? 0) г."
+            cell.createLabel(text: text)
+        } else {
+            cell.createImage(imageString: "")
+            cell.label.text = "Null"
+        }
+        
         cell.backgroundColor = .lightGray
         return cell
     }
@@ -65,14 +83,9 @@ extension MainVC: UICollectionViewDataSource, UICollectionViewDelegate {
         return 1
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offsetY = scrollView.contentOffset.y
-        let contentHeight = scrollView.contentSize.height
-        
-        if offsetY > contentHeight - scrollView.frame.height {
-            if !fetchingMore {
-                beginBathFetch()
-            }
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if (scrollView.contentOffset.y + scrollView.frame.size.height) >= (scrollView.contentSize.height) {            
+            beginBathFetch()
         }
     }
 }
@@ -90,16 +103,14 @@ extension MainVC {
     func beginBathFetch() {
         showSpinner()
         fetchingMore = true
-        print("Begin!")
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            let newImages: [UIImage] = [UIImage(named: "Дом")!, UIImage(named: "Пепси")!, UIImage(named: "Лейбл")!, UIImage(named: "ВК")!, UIImage(named: "Бомба")!, UIImage(named: "Огонь")!]
-            newImages.forEach {
-                self.imageCollection.append($0)
+        if let viewModel = self.viewModel as? MainViewModel {
+            viewModel.getAutomobils {
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                    self.stopSpinner()
+                }
             }
-            self.fetchingMore = false
-            self.collectionView.reloadData()
-            self.stopSpinner()
         }
     }
     

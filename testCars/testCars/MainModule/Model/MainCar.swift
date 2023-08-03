@@ -1,5 +1,5 @@
 //
-//  MainModel.swift
+//  MainCar.swift
 //  testCars
 //
 //  Created by Дмитрий Цветков on 02.08.2023.
@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - MainCar
-struct MainCar: Codable {
+struct MainCar: Decodable {
     let id, forSale: Int?
     let brandName, modelName, engineName: String?
     let year: Int?
@@ -45,7 +45,7 @@ struct MainCar: Codable {
 }
 
 // MARK: - Image
-struct Image: Codable {
+struct Image: Decodable {
     let id: Int?
     let isPrimary: Bool?
     let size, index: Int?
@@ -60,7 +60,7 @@ struct Image: Codable {
     }
 }
 
-enum TransmissionName: String, Codable {
+enum TransmissionName: String, Decodable {
     case at = "AT"
     case mt = "MT"
 }
@@ -69,7 +69,7 @@ typealias MainCars = [MainCar]
 
 // MARK: - Encode/decode helpers
 
-class JSONNull: Codable, Hashable {
+class JSONNull: Decodable, Hashable {
 
     public static func == (lhs: JSONNull, rhs: JSONNull) -> Bool {
         return true

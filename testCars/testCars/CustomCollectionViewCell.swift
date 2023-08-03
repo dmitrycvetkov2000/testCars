@@ -17,35 +17,34 @@ class CustomCollectionViewCell: UICollectionViewCell {
         let imageView = UIImageView(frame: .zero)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
+        imageView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+        imageView.clipsToBounds = true
         return imageView
     }()
     
     lazy var label: UILabel = {
-        let label = UILabel(frame: .zero)
+        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
-        label.text = "Hello"
+        label.adjustsFontSizeToFitWidth = true
+        label.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         return label
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
+    func createImage(imageString: String) {
         contentView.addSubview(imageView)
-        contentView.addSubview(label)
+
+        imageView.load(urlString: imageString)
         setupConstraintsForImage()
-        setupConstraintsForLabel()
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    func createLabel(text: String) {
+        contentView.addSubview(label)
+        label.text = text
+        setupConstraintsForLabel()
     }
     
     private func setupConstraintsForImage() {
         NSLayoutConstraint.activate([
-            imageView.heightAnchor.constraint(equalToConstant: 120),
-            imageView.widthAnchor.constraint(equalToConstant: 150),
-            
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
             imageView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 0),
             imageView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 0),

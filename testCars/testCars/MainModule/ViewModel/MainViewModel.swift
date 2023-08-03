@@ -13,7 +13,7 @@ protocol MainViewModelProtocol {
 }
 
 class MainViewModel: MainViewModelProtocol {
-    var auto: [MainCar]?
+    var cars: [MainCar]?
     var paginationAuto: [MainCar] = []
     var router: RouterProtocol?
     var networkManager: NetworkManagerProtocol?
@@ -24,16 +24,18 @@ class MainViewModel: MainViewModelProtocol {
     }
     
     func getAutomobils(completion: @escaping () -> Void) {
-        networkManager?.getAuto(completion: { [weak self] result in
+        networkManager?.getCars(completion: { [weak self] result in
             guard let self = self else { return }
             
             DispatchQueue.main.async {
                 switch result {
-                case .success(let auto):
-                    self.auto = auto
+                case .success(let car):
+                    self.cars = car
                     
                     for i in 0..<10 {
-                        self.paginationAuto.append(self.auto![i])
+                        if let car = self.cars?[i] {
+                            self.paginationAuto.append((car))
+                        }
                     }
                     completion()
                 case .failure(let error):
