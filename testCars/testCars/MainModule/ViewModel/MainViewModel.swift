@@ -11,7 +11,9 @@ protocol MainViewModelProtocol {
     init(networkManager: NetworkManagerProtocol, router: RouterProtocol)
     var router: RouterProtocol? { get set }
     var networkManager: NetworkManagerProtocol? { get set }
+    var paginationAuto: [MainCar] { get set }
     func getAutomobils(page: Int, completion: @escaping () -> Void)
+    
 }
 
 class MainViewModel: MainViewModelProtocol {

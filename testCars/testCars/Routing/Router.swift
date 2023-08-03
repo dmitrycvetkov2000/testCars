@@ -14,7 +14,7 @@ protocol RouterMain {
 
 protocol RouterProtocol: RouterMain {
     func initiateViewController()
-    func showDetailViewController(networkManager: NetworkManagerProtocol)
+    func showDetailViewController(networkManager: NetworkManagerProtocol, car: MainCar)
 }
 
 class Router: RouterProtocol {
@@ -32,10 +32,10 @@ class Router: RouterProtocol {
             navigationController.viewControllers = [mainVC]
         }
     }
-    
-    func showDetailViewController(networkManager: NetworkManagerProtocol) {
+    var imageCache = NSCache<AnyObject, AnyObject>()
+    func showDetailViewController(networkManager: NetworkManagerProtocol, car: MainCar) {
         if let navigationController = navigationController {
-            guard let detailVC = assebleBuilder?.createDetail(router: self, networkManager: networkManager) else { return }
+            guard let detailVC = assebleBuilder?.createDetail(router: self, networkManager: networkManager, car: car) else { return }
             navigationController.pushViewController(detailVC, animated: true)
         }
     }

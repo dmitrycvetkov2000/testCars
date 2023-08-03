@@ -91,7 +91,7 @@ extension MainVC: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let networkManager = viewModel?.networkManager {
-            viewModel?.router?.showDetailViewController(networkManager: networkManager)
+            viewModel?.router?.showDetailViewController(networkManager: networkManager, car: (viewModel?.paginationAuto[indexPath.row])!)
         }
     }
 }
