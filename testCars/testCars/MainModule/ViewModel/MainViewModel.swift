@@ -8,13 +8,38 @@
 import Foundation
 
 protocol MainViewModelProtocol {
-    init(model: MainModel)
+    init(networkManager: NetworkManagerProtocol, router: RouterProtocol)
+    func getAutomobils(completion: @escaping () -> Void)
 }
 
 class MainViewModel: MainViewModelProtocol {
-    var model: MainModel
+    var auto: [MainCar]?
+    var paginationAuto: [MainCar] = []
+    var router: RouterProtocol?
+    var networkManager: NetworkManagerProtocol?
     
-    required init(model: MainModel) {
-        self.model = model
+    required init(networkManager: NetworkManagerProtocol, router: RouterProtocol) {
+        self.networkManager = networkManager
+        self.router = router
+    }
+    
+    func getAutomobils(completion: @escaping () -> Void) {
+        networkManager?.getAuto(completion: { [weak self] result in
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let auto):
+                    self.auto = auto
+                    
+                    for i in 0..<10 {
+                        self.paginationAuto.append(self.auto![i])
+                    }
+                    completion()
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        })
     }
 }
