@@ -45,7 +45,7 @@ class MainVC: UIViewController {
         collectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: CustomCollectionViewCell.identifier)
         setupConstraints()
 
-        viewModel?.getAutomobils(completion: { [weak self] in
+        viewModel?.getAutomobils(page: 1, completion: { [weak self] in
             guard let self = self else { return }
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
@@ -111,7 +111,8 @@ extension MainVC {
         fetchingMore = true
         
         if let viewModel = self.viewModel as? MainViewModel {
-            viewModel.getAutomobils {
+            viewModel.page += 1
+            viewModel.getAutomobils(page:  viewModel.page) {
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
                     self.stopSpinner()

@@ -10,12 +10,13 @@ import Foundation
 import Foundation
 
 protocol NetworkManagerProtocol {
-    func getCars(completion: @escaping (Result<MainCars?, Error>) -> Void)
+    func getCars(page: Int, completion: @escaping (Result<MainCars?, Error>) -> Void)
 }
 
 class NetworkManager: NetworkManagerProtocol {
-    func getCars(completion: @escaping (Result<MainCars?, Error>) -> Void) {
-        let urlString = "http://am111.05.testing.place/api/v1/cars/list"
+    func getCars(page: Int, completion: @escaping (Result<MainCars?, Error>) -> Void) {
+        //let urlString = "http://am111.05.testing.place/api/v1/cars/list"
+        let urlString = "http://am111.05.testing.place/api/v1/cars/list?items=10&page=\(page)"
         guard let url = URL(string: urlString) else { return }
         
         URLSession.shared.dataTask(with: url) { data, response, error in
