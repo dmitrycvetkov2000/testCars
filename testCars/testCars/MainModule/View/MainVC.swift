@@ -88,6 +88,12 @@ extension MainVC: UICollectionViewDataSource, UICollectionViewDelegate {
             beginBathFetch()
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let networkManager = viewModel?.networkManager {
+            viewModel?.router?.showDetailViewController(networkManager: networkManager)
+        }
+    }
 }
 
 extension MainVC {

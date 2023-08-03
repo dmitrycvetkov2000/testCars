@@ -14,6 +14,7 @@ protocol RouterMain {
 
 protocol RouterProtocol: RouterMain {
     func initiateViewController()
+    func showDetailViewController(networkManager: NetworkManagerProtocol)
 }
 
 class Router: RouterProtocol {
@@ -29,6 +30,13 @@ class Router: RouterProtocol {
         if let navigationController = navigationController {
             guard let mainVC = assebleBuilder?.createMain(router: self) else { return }
             navigationController.viewControllers = [mainVC]
+        }
+    }
+    
+    func showDetailViewController(networkManager: NetworkManagerProtocol) {
+        if let navigationController = navigationController {
+            guard let detailVC = assebleBuilder?.createDetail(router: self, networkManager: networkManager) else { return }
+            navigationController.pushViewController(detailVC, animated: true)
         }
     }
     

@@ -9,6 +9,8 @@ import Foundation
 
 protocol MainViewModelProtocol {
     init(networkManager: NetworkManagerProtocol, router: RouterProtocol)
+    var router: RouterProtocol? { get set }
+    var networkManager: NetworkManagerProtocol? { get set }
     func getAutomobils(completion: @escaping () -> Void)
 }
 
