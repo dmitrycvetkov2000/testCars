@@ -19,7 +19,7 @@ struct MainCar: Decodable {
     let cityName, countryName: String?
     let transmissionName: TransmissionName?
     let engineVolume, placeName: String?
-    fileprivate let images: [Image]?
+    private let images: [Image]?
     let engine: String?
 
     enum CodingKeys: String, CodingKey {
@@ -45,7 +45,7 @@ struct MainCar: Decodable {
 }
 
 // MARK: - Image
-fileprivate struct Image: Decodable {
+private struct Image: Decodable {
     let id: Int?
     let isPrimary: Bool?
     let size, index: Int?

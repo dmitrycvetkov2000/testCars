@@ -9,7 +9,7 @@ import UIKit
 
 protocol BuilderProtocol: AnyObject {
     func createMain(router: RouterProtocol) -> UIViewController
-    func createDetail(router: RouterProtocol, networkManager: NetworkManagerProtocol, car: MainCar) -> UIViewController
+    func createDetail(router: RouterProtocol, networkManager: NetworkManagerProtocol, carId: Int) -> UIViewController
 }
 
 class ModuleBuilder: BuilderProtocol {
@@ -22,11 +22,9 @@ class ModuleBuilder: BuilderProtocol {
         return view
     }
     
-    func createDetail(router: RouterProtocol, networkManager: NetworkManagerProtocol, car: MainCar) -> UIViewController {
+    func createDetail(router: RouterProtocol, networkManager: NetworkManagerProtocol, carId: Int) -> UIViewController {
         let view = DetailVC()
-        
-        //let networkManager = NetworkManager()
-        let viewModel = DetailViewModel(networkManager: networkManager, router: router, car: car)
+        let viewModel = DetailViewModel(networkManager: networkManager, router: router, carId: carId)
         view.viewModel = viewModel
         
         return view

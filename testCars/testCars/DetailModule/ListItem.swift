@@ -7,7 +7,11 @@
 
 import Foundation
 
-struct ListItem {
+protocol ListItemProtocol {
+
+}
+
+struct ListItem: ListItemProtocol {
     let nameOfCar: String
     let modelName: String
     let transmissionName: String
@@ -17,3 +21,12 @@ struct ListItem {
     let imageOfOwner: String
     let nameOfOwner: String
 }
+
+struct ListItemPosts: ListItemProtocol {
+    let photoMain: String
+    let dateText: String
+    let commentText: String
+    let numberOfLikes: Int
+    let numberOfComments: Int
+}
+

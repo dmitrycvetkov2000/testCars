@@ -8,50 +8,77 @@
 import UIKit
 
 class DetailVC: UIViewController {
-    var viewModel: DetailViewModelProtocol?
+    var viewModel: DetailViewModelProtocol!
     var helper: HelperForCollectionView!
     
+    private lazy var spinner: CustomSpinnerSimple = {
+        let squareLength: CGFloat = 50
+        let spinner = CustomSpinnerSimple(squareLength: squareLength)
+        spinner.frame.origin = CGPoint(x: Int(view.bounds.size.width - squareLength) / 2, y: Int(view.bounds.size.height - squareLength / 2 * 2))
+
+        return spinner
+    }()
+    
     lazy var menuScrollMini: ListSection? = {
-        .menuScrollMini([.init(nameOfCar: (viewModel?.car.brandName)!,
-                               modelName: (viewModel?.car.modelName)!,
-                               transmissionName: (viewModel?.car.transmissionName!.rawValue)!,
-                               year: "\(viewModel?.car.year ?? 0) г.",
-                               power: ((viewModel?.car.engineVolume)!),
-                               imageCarString: (viewModel?.car.image)!,
-                               imageOfOwner: (viewModel?.car.thumbnail)!,
-                               nameOfOwner: (viewModel?.car.name)!)
-                        ])
+        .menuScrollMini([ListItem(nameOfCar: viewModel.moreInfo?.car?.brandName ?? "",
+                                  modelName: viewModel.moreInfo?.car?.modelName ?? "",
+                                  transmissionName: viewModel.moreInfo?.car?.transmissionName ?? "",
+                                  year: "\(viewModel.moreInfo?.car?.year ?? 0) г.",
+                                  power: viewModel.moreInfo?.car?.engineVolume ?? "",
+                                  imageCarString: viewModel.moreInfo?.car?.images?[0].url ?? "",
+                                  imageOfOwner: viewModel.moreInfo?.user?.avatar?.url ?? "",
+                                  nameOfOwner: viewModel.moreInfo?.user?.username ?? "")])
     }()
     
     lazy var menuScrollButtons: ListSection? = {
-        .buttons([.init(nameOfCar: "", modelName: "", transmissionName: "", year: "", power: "", imageCarString: "", imageOfOwner: "", nameOfOwner: ""),
-        ])
+        var mas: [ListItemPosts] = []
+            
+        for i in 0..<(viewModel?.paginationPosts.count ?? 0) {
+            mas.append(.init(photoMain: viewModel?.allPosts[i].img ?? "", dateText: viewModel?.allPosts[i].createdAt ?? "", commentText: viewModel?.allPosts[i].text ?? "", numberOfLikes: (viewModel?.allPosts[i].likeCount ?? 0), numberOfComments: (viewModel?.allPosts[i].commentCount ?? 0)))
+        }
+        return .buttons(mas)
     }()
     
     var pageData: [ListSection] {
         [menuScrollMini!, menuScrollButtons!]
     }
 
-    private let collectionView: UICollectionView = {
+    let collectionView: UICollectionView = {
         let collectionViewLayout = UICollectionViewLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
         
         collectionView.backgroundColor = .clear
-        collectionView.bounces = false
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
     
+    let group = DispatchGroup()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        self.helper = HelperForCollectionView()
-        helper.sections = pageData
         
-        setupViews()
-        setConstraints()
-        setDelegates()
+        group.enter()
+        self.viewModel?.getMoreInfo(carId: self.viewModel?.carId ?? 0) {
+            self.group.leave()
+        }
+        group.enter()
+        self.viewModel?.getPosts(carId: self.viewModel?.carId ?? 0, page: self.viewModel?.page ?? 0) {
+            self.group.leave()
+        }
+        
+        group.notify(queue: .main) {
+            self.helper = HelperForCollectionView()
+            self.helper.viewModel = self.viewModel
+            self.helper.view = self
+            self.helper.sections = self.pageData
+            
+            self.setupViews()
+            self.setConstraints()
+            self.setDelegates()
+        }
+        
     }
 }
 
@@ -72,10 +99,32 @@ extension DetailVC {
     private func setConstraints() {
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-            collectionView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0),
-            collectionView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0),
+            collectionView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10),
+            collectionView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0)
         ])
+    }
+    
+    func beginBathFetch() {
+        showSpinner()
+        viewModel?.page += 1
+        viewModel?.getPosts(carId: viewModel?.carId ?? 0, page: viewModel?.page ?? 0, completion: {
+            self.viewModel?.setPaginationPosts(postsPerPages: self.viewModel?.postsPerPages ?? 0) {
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                    self.stopSpinner()
+                }
+            }
+        })
+    }
+    
+    func showSpinner() {
+        view.addSubview(spinner)
+        spinner.startAnimation(delay: 0.04, replicates: 20)
+    }
+    func stopSpinner() {
+        spinner.stopAnimation()
+        spinner.removeFromSuperview()
     }
 }
 

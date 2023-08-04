@@ -34,8 +34,10 @@ class MainViewModel: MainViewModelProtocol {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let car):
-                    self.paginationAuto.append(contentsOf: (car!))
-                    completion()
+                    if let car = car {
+                        self.paginationAuto.append(contentsOf: (car))
+                        completion()
+                    }
                 case .failure(let error):
                     print(error)
                 }

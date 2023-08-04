@@ -10,7 +10,6 @@ import UIKit
 class MainVC: UIViewController {
     
     var viewModel: MainViewModelProtocol?
-    var fetchingMore = false
     private lazy var spinner: CustomSpinnerSimple = {
         let squareLength: CGFloat = 50
         let spinner = CustomSpinnerSimple(squareLength: squareLength)
@@ -91,7 +90,7 @@ extension MainVC: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let networkManager = viewModel?.networkManager {
-            viewModel?.router?.showDetailViewController(networkManager: networkManager, car: (viewModel?.paginationAuto[indexPath.row])!)
+            viewModel?.router?.showDetailViewController(networkManager: networkManager, carId: viewModel?.paginationAuto[indexPath.row].id ?? 0)
         }
     }
 }
@@ -108,7 +107,6 @@ extension MainVC {
     
     func beginBathFetch() {
         showSpinner()
-        fetchingMore = true
         
         if let viewModel = self.viewModel as? MainViewModel {
             viewModel.page += 1

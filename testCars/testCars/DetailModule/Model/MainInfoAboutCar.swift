@@ -27,7 +27,7 @@ struct Car: Codable {
     let brandID, modelID, engineID, transmissionID: Int?
     let placeID, name, cityName, countryName: String?
     let transmissionName, placeName: String?
-    fileprivate let images: [Image]?
+    let images: [Image]?
     let inSelectionCount, followersCount: Int?
     let follow: Bool?
     let engine, engineName, engineVolume: String?
@@ -57,21 +57,21 @@ struct Car: Codable {
         case engineVolume = "engine_volume"
         case isModerated = "is_moderated"
     }
-}
+    
+    // MARK: - Image
+    struct Image: Codable {
+        let id: Int?
+        let isPrimary: Bool?
+        let size, index: Int?
+        let url, thumbnailURL, image500, image100: String?
 
-// MARK: - Image
-fileprivate struct Image: Codable {
-    let id: Int?
-    let isPrimary: Bool?
-    let size, index: Int?
-    let url, thumbnailURL, image500, image100: String?
-
-    enum CodingKeys: String, CodingKey {
-        case id
-        case isPrimary = "is_primary"
-        case size, index, url
-        case thumbnailURL = "thumbnail_url"
-        case image500, image100
+        enum CodingKeys: String, CodingKey {
+            case id
+            case isPrimary = "is_primary"
+            case size, index, url
+            case thumbnailURL = "thumbnail_url"
+            case image500, image100
+        }
     }
 }
 

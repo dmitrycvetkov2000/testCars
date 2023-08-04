@@ -9,12 +9,13 @@ import Foundation
 
 enum ListSection {
     case menuScrollMini([ListItem])
-    case buttons([ListItem])
+    case buttons([ListItemPosts])
     
-    var items: [ListItem] {
+    var items: [ListItemProtocol] {
         switch self {
-        case .menuScrollMini(let items),
-                .buttons(let items):
+        case .menuScrollMini(let items):
+            return items
+        case .buttons(let items):
             return items
         }
     }

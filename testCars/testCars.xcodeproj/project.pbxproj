@@ -27,6 +27,7 @@
 		0AA037312A7BFA48008FB4BB /* CellForComments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA037302A7BFA48008FB4BB /* CellForComments.swift */; };
 		0AA037372A7C32DB008FB4BB /* HelperForCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA037362A7C32DB008FB4BB /* HelperForCollectionView.swift */; };
 		0AA0373A2A7C369E008FB4BB /* MainInfoAboutCar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA037392A7C369E008FB4BB /* MainInfoAboutCar.swift */; };
+		0AA0373C2A7C6BB1008FB4BB /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA0373B2A7C6BB1008FB4BB /* Post.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		0AA037302A7BFA48008FB4BB /* CellForComments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellForComments.swift; sourceTree = "<group>"; };
 		0AA037362A7C32DB008FB4BB /* HelperForCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperForCollectionView.swift; sourceTree = "<group>"; };
 		0AA037392A7C369E008FB4BB /* MainInfoAboutCar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainInfoAboutCar.swift; sourceTree = "<group>"; };
+		0AA0373B2A7C6BB1008FB4BB /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -217,6 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				0AA037392A7C369E008FB4BB /* MainInfoAboutCar.swift */,
+				0AA0373B2A7C6BB1008FB4BB /* Post.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -307,6 +310,7 @@
 				0AA037212A7B3E5C008FB4BB /* UIImageView+Extention.swift in Sources */,
 				0AA0372A2A7BF952008FB4BB /* ListItem.swift in Sources */,
 				0AA037312A7BFA48008FB4BB /* CellForComments.swift in Sources */,
+				0AA0373C2A7C6BB1008FB4BB /* Post.swift in Sources */,
 				0AA036F62A7A5D6F008FB4BB /* AppDelegate.swift in Sources */,
 				0AA0370D2A7A6121008FB4BB /* MainViewModel.swift in Sources */,
 			);

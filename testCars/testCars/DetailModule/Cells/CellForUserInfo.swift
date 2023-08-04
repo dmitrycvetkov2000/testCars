@@ -11,11 +11,20 @@ import UIKit
 
 class CellForUserInfo: UICollectionViewCell {
     
+    private let generalStack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        
+        return stack
+    }()
     
     private let mainTitleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.backgroundColor = .green
+        
         return label
     }()
     
@@ -23,7 +32,7 @@ class CellForUserInfo: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.backgroundColor = .yellow
+        imageView.backgroundColor = .systemGreen
         return imageView
     }()
     
@@ -32,73 +41,70 @@ class CellForUserInfo: UICollectionViewCell {
         stack.axis = .vertical
         
         stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.backgroundColor = .blue
+        stack.backgroundColor = .systemGreen
+        
         return stack
     }()
     
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
-        //label.translatesAutoresizingMaskIntoConstraints = false
+        
         return label
     }()
     
     private let mainInfoLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
-        //label.translatesAutoresizingMaskIntoConstraints = false
+        
         return label
     }()
     
     private let nestedStack: UIStackView = {
         let nestedStack = UIStackView()
         nestedStack.axis = .horizontal
-
+        nestedStack.spacing = 10
+        nestedStack.backgroundColor = .white
+        
         return nestedStack
     }()
     
     private let nameOfOwnerLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
-        //label.translatesAutoresizingMaskIntoConstraints = false
+        
         return label
     }()
     
-    private let photoOfOwner: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-
-        return imageView
-    }()
-    
+    let photoOfOwner: UIImageView = UIImageView()
     var imageCache = NSCache<AnyObject, AnyObject>()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        backgroundColor = .lightGray
         setupMainTitleLabelLabel()
-        setupPhotoCar()
         setupStack()
         setConstraints()
         
         layer.cornerRadius = 10
+        layer.borderWidth = 2
         clipsToBounds = true
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
     }
     
     func setupMainTitleLabelLabel() {
         addSubview(mainTitleLabel)
     }
     
-    func setupPhotoCar() {
-        addSubview(photoOfCar)
-    }
-    
     func setupStack() {
-        addSubview(stack)
+        addSubview(generalStack)
+        
+        generalStack.addArrangedSubview(photoOfCar)
+        generalStack.addArrangedSubview(stack)
+        
         stack.addArrangedSubview(nameLabel)
         stack.addArrangedSubview(mainInfoLabel)
         stack.addArrangedSubview(nestedStack)
@@ -118,15 +124,24 @@ class CellForUserInfo: UICollectionViewCell {
     func setConstraints() {
         NSLayoutConstraint.activate([
             mainTitleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 0),
-            mainTitleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            mainTitleLabel.leftAnchor.constraint(equalTo: leftAnchor),
+            mainTitleLabel.rightAnchor.constraint(equalTo: rightAnchor),
+            mainTitleLabel.heightAnchor.constraint(equalToConstant: 40),
             
-            photoOfCar.topAnchor.constraint(equalTo: mainTitleLabel.bottomAnchor, constant: 0),
-            photoOfCar.leftAnchor.constraint(equalTo: leftAnchor, constant: 0),
-            photoOfCar.heightAnchor.constraint(equalToConstant: CGFloat(self.bounds.size.height / 2)),
-            photoOfCar.widthAnchor.constraint(equalToConstant: CGFloat(self.bounds.size.height / 2)),
+            generalStack.topAnchor.constraint(equalTo: mainTitleLabel.bottomAnchor, constant: 0),
+            generalStack.leftAnchor.constraint(equalTo: leftAnchor, constant: 0),
+            generalStack.rightAnchor.constraint(equalTo: rightAnchor, constant: 0),
+            generalStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
             
-            stack.topAnchor.constraint(equalTo: mainTitleLabel.bottomAnchor, constant: 0),
+            photoOfCar.widthAnchor.constraint(equalTo: generalStack.heightAnchor, multiplier: 1),
+            photoOfCar.heightAnchor.constraint(equalTo: generalStack.heightAnchor, multiplier: 1),
+            
+            stack.topAnchor.constraint(equalTo: generalStack.topAnchor, constant: 0),
             stack.leftAnchor.constraint(equalTo: photoOfCar.rightAnchor, constant: 0),
+            stack.rightAnchor.constraint(equalTo: rightAnchor, constant: 0),
+            
+            photoOfOwner.widthAnchor.constraint(equalTo: photoOfCar.heightAnchor, multiplier: 0.5),
+            photoOfOwner.heightAnchor.constraint(equalTo: photoOfCar.heightAnchor, multiplier: 0.5),
         ])
     }
 }
