@@ -67,6 +67,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0A16371E2A7CD41D00AB067B /* Api */ = {
+			isa = PBXGroup;
+			children = (
+				0AA0371D2A7ACE11008FB4BB /* NetworkManager.swift */,
+			);
+			path = Api;
+			sourceTree = "<group>";
+		};
+		0A16371F2A7CD4B300AB067B /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				0AA037152A7AB9A1008FB4BB /* CustomSpinnerSimple.swift */,
+			);
+			path = CustomViews;
+			sourceTree = "<group>";
+		};
 		0AA036E92A7A5D6F008FB4BB = {
 			isa = PBXGroup;
 			children = (
@@ -87,13 +103,12 @@
 			isa = PBXGroup;
 			children = (
 				0AA037222A7B626F008FB4BB /* DetailModule */,
-				0AA0371F2A7B3E3B008FB4BB /* Extentions */,
-				0AA0371D2A7ACE11008FB4BB /* NetworkManager.swift */,
-				0AA0371C2A7ACB9B008FB4BB /* Routing */,
-				0AA037192A7AC960008FB4BB /* Builder */,
-				0AA037152A7AB9A1008FB4BB /* CustomSpinnerSimple.swift */,
-				0AA037132A7A702D008FB4BB /* CustomCollectionViewCell.swift */,
 				0AA037122A7A6164008FB4BB /* MainModule */,
+				0AA037192A7AC960008FB4BB /* Builder */,
+				0AA0371C2A7ACB9B008FB4BB /* Routing */,
+				0A16371F2A7CD4B300AB067B /* CustomViews */,
+				0A16371E2A7CD41D00AB067B /* Api */,
+				0AA0371F2A7B3E3B008FB4BB /* Extentions */,
 				0AA0370A2A7A601E008FB4BB /* Application */,
 				0AA037092A7A6011008FB4BB /* Resources */,
 			);
@@ -122,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				0AA036F92A7A5D6F008FB4BB /* MainVC.swift */,
+				0AA037132A7A702D008FB4BB /* CustomCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -180,9 +196,9 @@
 			isa = PBXGroup;
 			children = (
 				0AA037382A7C3660008FB4BB /* Model */,
-				0AA0372D2A7BF9AD008FB4BB /* Cells */,
 				0AA037282A7B62AD008FB4BB /* View */,
 				0AA037272A7B62A6008FB4BB /* ViewModel */,
+				0AA0372D2A7BF9AD008FB4BB /* Cells */,
 				0AA037292A7BF952008FB4BB /* ListItem.swift */,
 				0AA0372B2A7BF96F008FB4BB /* ListSection.swift */,
 				0AA037362A7C32DB008FB4BB /* HelperForCollectionView.swift */,
